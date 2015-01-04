@@ -8,16 +8,11 @@ var request           = require('request') // web requests
 Retrieves the URLs of every program's
 listing page and puts them in an array.
 */
-(function getProgramURLs() {
+function getProgramURLs(callback) {
   request(baseURL + courseBaseURL + courseListingsURL, function(error, response, body) {
 
-    // Something went wrong
-    if(error || response.statusCode != 200) {
-      throw error;
-    }
-
     // Scrape the course URLs from the main course listings page
-    else {
+    if(!error && response.statusCode == 200) {
 
       // Load the response body into Cheerio for DOM manipulation
       var $            = cheerio.load(body);
@@ -31,20 +26,19 @@ listing page and puts them in an array.
           urls.push(currentLink);
         };
       });
-
-      // Get the course codes in each program
-      // for (var i = 0; i < 3; i++) {
-      // for (var programURL in urls) {
-        getProgramCourses('phy.html', function(err, courselist) {
-          // console.log(courselist);
-        // });
-        // getProgramCourses(urls, programURL);
-          // console.log(courselist);
-        });
-
     }; // End course listings request else
+    callback(null, urls);
   }); // End course listings request
-})(); // End getProgramURLs
+}; // End getProgramURLs
+
+// Works!
+getProgramURLs(function(err, urls) {
+  console.log(urls);
+});
+
+getProgramCourses('dts.html', function(err, courselist) {
+  // sample test case
+});
 
 /*
 Retrieves all the courses in a program's
@@ -56,12 +50,12 @@ function getProgramCourses(singleURL, callback) {
 
     // Something went wrong
     if (!error && response.statusCode == 200) {
-      // Load the new markup from this body into Cheerio for parsing.
+      // Load the new markup from this request.
       var $                   = cheerio.load(body);
       var courseCodeRegex     = new RegExp(/([A-Za-z]{3})([0-9]{3})([A-Za-z]{1})([0-9]{1})/);
-      var courseTermRegex     = new RegExp(/(F|S|Y)/i);
       var courseTutorialRegex = new RegExp(/(T|P)[0-9]{4}/);
       var courseSectionRegex  = new RegExp(/(L)([0-9]{4})/);
+      var courseTermRegex     = new RegExp(/(F|S|Y)/i);
       var courseWaitListRegex = new RegExp(/Y|N/);
       var coursesJSONArray    = [];
 
