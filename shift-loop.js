@@ -58,9 +58,9 @@ function getProgramCourses(singleURL, callback) {
     if (!error && response.statusCode == 200) {
       // Load the new markup from this body into Cheerio for parsing.
       var $                   = cheerio.load(body);
-      var courseCodeRegex     = new RegExp('([A-Za-z]{3})([0-9]{3})([A-Za-z]{1})([0-9]{1})');
+      var courseCodeRegex     = new RegExp('[A-Za-z]{3}(\d{3})[A-Za-z]{1}(\d{1})');
       var courseTermRegex     = new RegExp('(F|f)|(S|s)|(Y|y)');
-      var courseSectionRegex  = new RegExp('([A-Za-z])([0-9]{4})');
+      var courseSectionRegex  = new RegExp('[A-Za-z](\d{4})');
       var courseWaitListRegex = new RegExp('Y|N');
       var coursesJSONArray    = [];
 
@@ -112,7 +112,7 @@ function getProgramCourses(singleURL, callback) {
             var courseProfessors = [];
 
             // May be multiple profs for one course section, append them
-            if(courseProfessor.text().toString().indexOf('/') > -1) {
+            if (courseProfessor.text().toString().indexOf('/') > -1) {
               courseProfessors = courseProfessor.text().toString().split('/');
             } else {
               courseProfessors.push(courseProfessor.text().toString());
