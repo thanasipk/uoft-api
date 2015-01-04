@@ -1,7 +1,5 @@
 var request           = require('request') // web requests
   , cheerio           = require('cheerio') // server-side DOM functions
-  , fs                = require('fs') // file-system interaction
-  , writeLocation     = 'allCourseCodes.json'
   , baseURL           = 'http://www.artsandscience.utoronto.ca'
   , courseBaseURL     = '/ofr/timetable/winter'
   , courseListingsURL = '/sponsors.htm';
@@ -77,16 +75,18 @@ function getProgramCourses(singleURL, callback) {
           var dataCourseSect = currentRow.children().last();
           var count = 0;
 
-
+          /* At most 10 cells in the row, check until the end to be sure */
           while(!courseSectionRegex.test(dataCourseSect.text().toString()) && count < 9) {
             dataCourseSect = dataCourseSect.prev();
             count++;
           };
 
           /* Once the lecture section is found, the other data is relative to its position */
+          dataCourseWait = dataCourseSect.next();
           dataCourseName = dataCourseSect.prev();
           dataCourseTerm = dataCourseSect.prev().prev();
           dataCourseCode = dataCourseSect.prev().prev().prev();
+          dataCourseProf = dataCourseSect.next().next().next().next();
 
           console.log("----------------------------------------");
           // KEEP HERE FOR TESTING PURPOSES
@@ -104,18 +104,29 @@ function getProgramCourses(singleURL, callback) {
         */
 
         if(courseSectionRegex.test(dataCourseSect.text().toString()) &&
-          courseTermRegex.test(dataCourseTerm.text().toString()) &&
-          courseCodeRegex.test(dataCourseCode.text().toString())) {
+           courseTermRegex.test(dataCourseTerm.text().toString())    &&
+           courseCodeRegex.test(dataCourseCode.text().toString())) {
 
             // Should loop to get the sections repeatedly
             var courseSections = [];
+            var courseProfessr = [];
+
+            // May be multiple profs for one course section, append them
+            if(dataCourseProf.text().toString().indexOf('/') > -1) {
+              courseProfessr = dataCourseProf.text().toString().split('/');
+            } else {
+              courseProfessr.push(dataCourseProf.text().toString());
+            }
+
             courseSections.push(dataCourseSect.text().toString());
 
             course = {
               courseName: dataCourseName.text().toString(),
               courseCode: dataCourseCode.text().toString(),
               CourseTerm: dataCourseTerm.text().toString(),
-              CourseSect: courseSections
+              CourseSect: courseSections,
+              courseWait: dataCourseWait.text().toString(),
+              courseProf: courseProfessr
             };
 
             courseJSON.push(course);
