@@ -58,17 +58,17 @@ function getProgramCourses(singleURL, callback) {
     if (!error && response.statusCode == 200) {
       // Load the new markup from this body into Cheerio for parsing.
       var $                   = cheerio.load(body);
-      var courseCodeRegex     = new RegExp('[A-Za-z]{3}(\d{3})[A-Za-z]{1}(\d{1})');
-      var courseTermRegex     = new RegExp('(F|f)|(S|s)|(Y|y)');
-      var courseSectionRegex  = new RegExp('[A-Za-z](\d{4})');
-      var courseWaitListRegex = new RegExp('Y|N');
+      var courseCodeRegex     = new RegExp(/([A-Za-z]{3})([0-9]{3})([A-Za-z]{1})([0-9]{1})/);
+      var courseTermRegex     = new RegExp(/(F|S|Y)/i);
+      var courseTutorialRegex = new RegExp(/(T|P)[0-9]{4}/);
+      var courseSectionRegex  = new RegExp(/(L)([0-9]{4})/);
+      var courseWaitListRegex = new RegExp(/Y|N/);
       var coursesJSONArray    = [];
 
       // Get the course code from the page markup
       $('tr').each(function(foundCourse) {
-          // Lock iteration legnth for development and testing purposes
+        // Lock iteration legnth for development and testing purposes
         if(foundCourse < 200) {
-          var courseJSON = [];
           var courseSect = [];
 
           var currentRow = $(this);
@@ -129,7 +129,7 @@ function getProgramCourses(singleURL, callback) {
               courseProf: courseProfessors
             };
 
-            courseJSON.push(course);
+            coursesJSONArray.push(course);
             console.log(JSON.stringify(course));
         };
       });
