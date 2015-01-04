@@ -72,28 +72,28 @@ function getProgramCourses(singleURL, callback) {
           var courseSect = [];
 
           var currentRow = $(this);
-          var dataCourseSect = currentRow.children().last();
+          var section = currentRow.children().last();
           var count = 0;
 
           /* At most 10 cells in the row, check until the end to be sure */
-          while(!courseSectionRegex.test(dataCourseSect.text().toString()) && count < 9) {
-            dataCourseSect = dataCourseSect.prev();
+          while(!courseSectionRegex.test(section.text().toString()) && count < 9) {
+            section = section.prev();
             count++;
           };
 
           /* Once the lecture section is found, the other data is relative to its position */
-          dataCourseWait = dataCourseSect.next();
-          dataCourseName = dataCourseSect.prev();
-          dataCourseTerm = dataCourseSect.prev().prev();
-          dataCourseCode = dataCourseSect.prev().prev().prev();
-          dataCourseProf = dataCourseSect.next().next().next().next();
+          courseWait = section.next();
+          courseName = section.prev();
+          courseTerm = section.prev().prev();
+          courseCode = section.prev().prev().prev();
+          courseProfessor = section.next().next().next().next();
 
           console.log("----------------------------------------");
           // KEEP HERE FOR TESTING PURPOSES
-          // console.log('dataCourseSect found as: ' + dataCourseSect.text().toString());
-          // console.log('dataCourseName found as: ' + dataCourseName.text().toString());
-          // console.log('dataCourseTerm found as: ' + dataCourseTerm.text().toString());
-          // console.log('dataCourseCode found as: ' + dataCourseCode.text().toString());
+          // console.log('section found as: ' + section.text().toString());
+          // console.log('courseName found as: ' + courseName.text().toString());
+          // console.log('courseTerm found as: ' + courseTerm.text().toString());
+          // console.log('courseCode found as: ' + courseCode.text().toString());
         };
 
         // Push valid course data (lecture data only) to the course JSON array
@@ -103,30 +103,30 @@ function getProgramCourses(singleURL, callback) {
           tutorial rows.
         */
 
-        if(courseSectionRegex.test(dataCourseSect.text().toString()) &&
-           courseTermRegex.test(dataCourseTerm.text().toString())    &&
-           courseCodeRegex.test(dataCourseCode.text().toString())) {
+        if(courseSectionRegex.test(section.text().toString()) &&
+           courseTermRegex.test(courseTerm.text().toString())    &&
+           courseCodeRegex.test(courseCode.text().toString())) {
 
             // Should loop to get the sections repeatedly
             var courseSections = [];
-            var courseProfessr = [];
+            var courseProfessors = [];
 
             // May be multiple profs for one course section, append them
-            if(dataCourseProf.text().toString().indexOf('/') > -1) {
-              courseProfessr = dataCourseProf.text().toString().split('/');
+            if(courseProfessor.text().toString().indexOf('/') > -1) {
+              courseProfessors = courseProfessor.text().toString().split('/');
             } else {
-              courseProfessr.push(dataCourseProf.text().toString());
+              courseProfessors.push(courseProfessor.text().toString());
             }
 
-            courseSections.push(dataCourseSect.text().toString());
+            courseSections.push(section.text().toString());
 
             course = {
-              courseName: dataCourseName.text().toString(),
-              courseCode: dataCourseCode.text().toString(),
-              CourseTerm: dataCourseTerm.text().toString(),
+              courseName: courseName.text().toString(),
+              courseCode: courseCode.text().toString(),
+              CourseTerm: courseTerm.text().toString(),
               CourseSect: courseSections,
-              courseWait: dataCourseWait.text().toString(),
-              courseProf: courseProfessr
+              courseWait: courseWait.text().toString(),
+              courseProf: courseProfessors
             };
 
             courseJSON.push(course);
