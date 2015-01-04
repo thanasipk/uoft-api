@@ -5,9 +5,39 @@ var request           = require('request') // web requests
   , courseListingsURL = '/sponsors.htm';
 
 /*
-Retrieves the URLs of every program's
+Retrieves the URL for course's program's
 listing page and puts them in an array.
 */
+function getProgramURL(course, callback) {
+  request(baseURL + courseBaseURL + courseListingsURL, function(error, response, body) {
+
+    // Scrape the course URLs from the main course listings page
+    if(!error && response.statusCode == 200) {
+
+      // Load the response body into Cheerio for DOM manipulation
+      var $            = cheerio.load(body);
+      var webPageRegex = new RegExp('[A-Za-z]\.html');
+
+      // Grab the course links from the program bullet points
+      $('li a', '#content').each(function(foundLink) {
+        var currentLink = $(this);
+        // Every course link has its course code
+        if (webPageRegex.test(currentLink.attr('href').toString()) &&
+            currentLink.text().toString().indexOf('[' + course.toUpperCase() + ' courses') > -1) {
+              callback(null, {
+                link: currentLink.attr('href').toString()
+              });
+              return;
+        };
+      });
+    }; // End course listings request else
+  }); // End course listings request
+}; // End getProgramURLs
+
+getProgramURL('csc', function(err, linkJSON) {
+  console.log(linkJSON.link);
+});
+
 function getProgramURLs(callback) {
   request(baseURL + courseBaseURL + courseListingsURL, function(error, response, body) {
 
@@ -30,15 +60,15 @@ function getProgramURLs(callback) {
     callback(null, urls);
   }); // End course listings request
 }; // End getProgramURLs
-
-// Works!
-getProgramURLs(function(err, urls) {
-  console.log(urls);
-});
-
-getProgramCourses('dts.html', function(err, courselist) {
-  // sample test case
-});
+//
+// // Works!
+// getProgramURLs(function(err, urls) {
+//   console.log(urls);
+// });
+//
+// getProgramCourses('dts.html', function(err, courselist) {
+//   // sample test case
+// });
 
 /*
 Retrieves all the courses in a program's
