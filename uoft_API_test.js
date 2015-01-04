@@ -6,8 +6,9 @@ var uoftAPI = require('./uoft_API.js');
 *************************************
 getCourseCodes          --
 getCourseInfo           --
-getCourseDepartment     -- IN-PROGRESS
+getCourseDepartment     -- IN-PROGRESS; MUST ASSERT
 getProgramCourses       --
+getProgramURL           -- IN-PROGRESS; MUST ASSERT
 *************************************/
 
 /*************************************
@@ -46,3 +47,23 @@ uoftAPI.getCourseDepartment('phil', function(err, departments) {
 /*************************************
   Tests: getCourseCodes
 *************************************/
+/*************************************
+Tests: getProgramURL
+*************************************/
+// Case: Valid course code with all courses in one department.
+// Returns: A JSON object with a link specific to the department only.
+uoftAPI.getProgramURL('csc', function(err, linkJSON) {
+  console.log(linkJSON.link);
+});
+
+// Case: Valid course code with courses in multiple departments.
+// Returns: A JSON object with a link specific to the department only.
+uoftAPI.getProgramURL('env', function(err, linkJSON) {
+  console.log(linkJSON.link);
+});
+
+// Case: Invalid course code.
+// Returns: An JSON object with an empty link attribute (fails silently).
+uoftAPI.getProgramURL('env', function(err, linkJSON) {
+  console.log(linkJSON.link);
+});

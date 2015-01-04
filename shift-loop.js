@@ -23,16 +23,17 @@ function getProgramURL(course, callback) {
         var currentLink = $(this);
         // Every course link has its course code
         if (webPageRegex.test(currentLink.attr('href').toString()) &&
-            currentLink.text().toString().indexOf('[' + course.toUpperCase() + ' courses') > -1) {
+            currentLink.text().toString().indexOf(
+              '[' + course.toUpperCase() + ' courses') > -1) {
               callback(null, {
                 link: currentLink.attr('href').toString()
               });
               return;
         };
       });
-    }; // End course listings request else
-  }); // End course listings request
-}; // End getProgramURLs
+    };
+  });
+};
 
 getProgramURL('csc', function(err, linkJSON) {
   console.log(linkJSON.link);
@@ -56,19 +57,10 @@ function getProgramURLs(callback) {
           urls.push(currentLink);
         };
       });
-    }; // End course listings request else
+    };
     callback(null, urls);
-  }); // End course listings request
-}; // End getProgramURLs
-//
-// // Works!
-// getProgramURLs(function(err, urls) {
-//   console.log(urls);
-// });
-//
-// getProgramCourses('dts.html', function(err, courselist) {
-//   // sample test case
-// });
+  });
+};
 
 /*
 Retrieves all the courses in a program's
