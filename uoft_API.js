@@ -33,15 +33,11 @@ getCourseCodes('his', '100') => ['his102', 'his103', 'his109']
   - 75, 1 for each course's course code page
  */
 
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-// How to test the functions within here
 exports.ConsoleTest = function(passedArg) {
   console.log('passedArg: ' + passedArg + '\nMODULE IMPORT IN CONSOLE WORKS');
 };
 
 this.ConsoleTest('hello world');
-///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
 exports.getCourseCodes = function (program, year, callback) {
@@ -103,7 +99,7 @@ Returns an array of strings, containing every program name at UofT.
 
 /* number of requests: 1
   - 1 to sponsors to find the course code link
- */
+*/
 exports.getAllProgramTitles = function (callback) {
   var programsList = [];
   // do some work
@@ -138,7 +134,7 @@ getCourseDepartment('env', function(err, programTitles) {
   'Physics' ]
 
 ----------------------------------------
-Number of Requests
+Number of Successful Requests Per Call
 ----------------------------------------
 Min: 1 (parses the listings page)
 Max: 1 (parses the listings page)
@@ -147,37 +143,36 @@ Max: 1 (parses the listings page)
 
 exports.getCourseDepartment = function (abbrev, callback) {
 
-    // Invalid course code
-    if(abbrev.length != 3) {
-      callback('Usage: A three-letter course-code must be used (example):\n'
-        + '   getCourseDepartment(\'csc\', function(depts) {...}', null);
-    };
-
-    request(rootURL + courseRootURL + courseListingsURL, function(error, response, body) {
-
-      // Retrieve the course department
-      if(!error && response.statusCode === 200) {
-        var $            = cheerio.load(body);
-        var departments  = [];
-        var webPageRegex = new RegExp('[A-Za-z]\.html');
-
-        $('li a', '#content').each(function(foundLink) {
-          var linkText = $(this).text().toString();
-          var linkAttr = $(this).attr('href').toString();
-
-          // If abbrev has a course in that department
-          if(webPageRegex.test(linkAttr) &&
-             linkText.indexOf(abbrev.toUpperCase()) > -1) {
-            // Push just the program name, not the extra info
-            departments.push({
-              department: linkText.slice(0, linkText.indexOf('[')).trim()
-            });
-          };
-        });
-      };
-      callback(null, departments);
-    });
+  // Invalid course code
+  if(abbrev.length != 3) {
+    callback('Usage: A three-letter course-code must be used (example):\n'
+      + '   getCourseDepartment(\'csc\', function(depts) {...}', null);
   };
+
+  request(rootURL + courseRootURL + courseListingsURL, function(error, response, body) {
+
+    // Retrieve the course department
+    if(!error && response.statusCode === 200) {
+      var $            = cheerio.load(body);
+      var departments  = [];
+      var webPageRegex = new RegExp('[A-Za-z]\.html');
+
+      $('li a', '#content').each(function(foundLink) {
+        var linkText = $(this).text().toString();
+        var linkAttr = $(this).attr('href').toString();
+
+        // If abbrev has a course in that department
+        if (webPageRegex.test(linkAttr) && linkText.indexOf('[' + abbrev.toUpperCase() + ' courses') > -1) {
+          // Push just the program name, not the extra info
+          departments.push({
+            department: linkText.slice(0, linkText.indexOf('[')).trim()
+          });
+        };
+      });
+    };
+    callback(null, departments);
+  });
+};
 
 /*
 Returns an array of JSON objects, where each object contains
