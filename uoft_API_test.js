@@ -27,7 +27,7 @@ uoftAPI.getCourseDepartment('csc', function(err, departments) {
 });
 
 // Case: Course code has courses in multiple departments
-// Returns: Array of each department names as a string
+// Returns: Array of a single department name string
 uoftAPI.getCourseDepartment('env', function(err, departments) {
   console.log(departments);
 });

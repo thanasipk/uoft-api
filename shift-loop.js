@@ -16,8 +16,8 @@ function getProgramCourses(course, callback) {
 
     request(baseURL + courseBaseURL + '/' + courseURL, function(error, response, body) {
 
-      // Something went wrong
       if (!error && response.statusCode == 200) {
+
         // Load the new markup from this request.
         var $                   = cheerio.load(body);
         var courseCodeRegex     = new RegExp(/([A-Za-z]{3})([0-9]{3})([A-Za-z]{1})([0-9]{1})/);
@@ -73,12 +73,11 @@ function getProgramCourses(course, callback) {
               var courseSections = [];
               var courseProfessors = [];
 
-              // May be multiple profs for one course section, append them
-              if (courseProfessor.text().toString().indexOf('/') > -1) {
-                courseProfessors = courseProfessor.text().toString().split('/');
-              } else {
-                courseProfessors.push(courseProfessor.text().toString());
-              }
+              /* There may be multiple profs for one course
+                 section, if so, parse and append them */
+              (courseProfessor.text().toString().indexOf('/') > -1)
+                ? courseProfessors = courseProfessor.text().toString().split('/')
+                : courseProfessors.push(courseProfessor.text().toString());
 
               courseSections.push(section.text().toString());
 
@@ -101,6 +100,6 @@ function getProgramCourses(course, callback) {
   });
 };
 
-getProgramCourses('csc', function(err, courses) {
+getProgramCourses('env', function(err, courses) {
   console.log(courses);
 });
