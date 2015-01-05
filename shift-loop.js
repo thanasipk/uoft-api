@@ -1,59 +1,9 @@
 var request           = require('request') // web requests
   , cheerio           = require('cheerio') // server-side DOM functions
+  , helper            = require('./helper.js')
   , baseURL           = 'http://www.artsandscience.utoronto.ca'
   , courseBaseURL     = '/ofr/timetable/winter'
   , courseListingsURL = '/sponsors.htm';
-
-/*
-Retrieves the URL for course's program's
-listing page and puts them in an array.
-*/
-function getProgramURL(course, callback) {
-  request(baseURL + courseBaseURL + courseListingsURL, function(error, response, body) {
-
-    // Scrape the course URLs from the main course listings page
-    if(!error && response.statusCode == 200) {
-
-      // Load the response body into Cheerio for DOM manipulation
-      var $            = cheerio.load(body);
-      var webPageRegex = new RegExp('[A-Za-z]\.html');
-
-      // Grab the course links from the program bullet points
-      $('li a', '#content').each(function(foundLink) {
-        var currentLink = $(this);
-        // Every course link has its course code
-        if (webPageRegex.test(currentLink.attr('href').toString()) &&
-            currentLink.text().toString().indexOf('[' + course.toUpperCase() + ' courses') > -1) {
-              callback(null, currentLink.attr('href').toString());
-              return;
-        };
-      });
-    };
-  });
-};
-
-function getProgramURLs(callback) {
-  request(baseURL + courseBaseURL + courseListingsURL, function(error, response, body) {
-
-    // Scrape the course URLs from the main course listings page
-    if(!error && response.statusCode == 200) {
-
-      // Load the response body into Cheerio for DOM manipulation
-      var $            = cheerio.load(body);
-      var urls         = []; // Store all program listing URLs
-      var webPageRegex = new RegExp('[A-Za-z]\.html');
-
-      // Grab the course links from the program bullet points
-      $('li a', '#content').each(function(foundLink) {
-        var currentLink = $(this).attr('href').toString();
-        if (webPageRegex.test(currentLink)) {
-          urls.push(currentLink);
-        };
-      });
-    };
-    callback(null, urls);
-  });
-};
 
 /*
 Retrieves all the courses in a program's
@@ -61,7 +11,7 @@ URL and stores the results in a file.
 */
 function getProgramCourses(course, callback) {
 
-  getProgramURL(course, function(err, courseURL) {
+  helper.getProgramURL(course, function(err, courseURL) {
 
     request(baseURL + courseBaseURL + '/' + courseURL, function(error, response, body) {
 
