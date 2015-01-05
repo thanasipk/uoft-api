@@ -1,4 +1,5 @@
-var request           = require('request') // web requests
+const
+    request           = require('request') // web requests
   , cheerio           = require('cheerio') // server-side DOM functions
   , helper            = require('./helper.js')
   // , async             = require('async')   // pretty nested-callbacks
@@ -96,7 +97,6 @@ exports.getCourseInfo = function (courseCode, callback) {
   callback(courseHash);
 };
 
-/////////////////////////////////////////////////////////
 /*
 Returns an array of strings, containing every program name at UofT.
 */
@@ -110,9 +110,7 @@ exports.getAllProgramTitles = function (callback) {
   callback(programsList);
 };
 
-/////////////////////////////////////////////////////////
 /*
-
 ----------------------------------------
 Function: getCourseDepartment
 ----------------------------------------
@@ -181,14 +179,10 @@ exports.getCourseDepartment = function (abbrev, callback) {
     });
   };
 
-/////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////
 /*
 Returns an array of JSON objects, where each object contains
 a single course's title, coursecode, semester and professor.
 */
-
 exports.getProgramCourses = function (programURLs, singleURL) {
 
   request(rootURL + courserootURL + '/' + programURLs[singleURL], function(error, response, body) {

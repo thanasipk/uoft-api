@@ -1,5 +1,6 @@
-var uoftAPI = require('./uoft_API.js');
-var helper  = require('./helper.js');
+const
+   uoftAPI = require('./uoft_API.js')
+ , helper  = require('./helper.js');
 
 /*************************************
         API FUNCTION TESTS

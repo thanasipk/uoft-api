@@ -1,4 +1,5 @@
-var request           = require('request') // web requests
+const
+    request           = require('request') // web requests
   , cheerio           = require('cheerio') // server-side DOM functions
   , helper            = require('./helper.js')
   , baseURL           = 'http://www.artsandscience.utoronto.ca'
