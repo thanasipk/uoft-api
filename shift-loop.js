@@ -21,21 +21,20 @@ function getProgramCourses(course, callback) {
         // Load the new markup from this request.
         var $                   = cheerio.load(body);
         var courseCodeRegex     = new RegExp(/([A-Za-z]{3})([0-9]{3})([A-Za-z]{1})([0-9]{1})/);
-        var courseTutorialRegex = new RegExp(/(T|P)[0-9]{4}/);
-        var courseSectionRegex  = new RegExp(/(L)([0-9]{4})/);
-        var courseTermRegex     = new RegExp(/(F|S|Y)/);
-        var courseWaitListRegex = new RegExp(/Y|N/);
-        var coursesJSONArray    = [];
+          , courseTutorialRegex = new RegExp(/(T|P)[0-9]{4}/);
+          , courseSectionRegex  = new RegExp(/(L)([0-9]{4})/);
+          , courseTermRegex     = new RegExp(/(F|S|Y)/);
+          , courseWaitListRegex = new RegExp(/Y|N/);
+          , coursesJSON         = [];
 
         // Get the course code from the page markup
         $('tr').each(function(foundCourse) {
           // Lock iteration legnth for development and testing purposes
           if(foundCourse < 1000) {
-            var courseSect = [];
-
             var currentRow = $(this);
-            var section = currentRow.children().last();
-            var count = 0;
+              , section = currentRow.children().last();
+              , courseSect = [];
+              , count = 0;
 
             /* At most 10 cells in the row, check until the end to be sure */
             while(!courseSectionRegex.test(section.text().toString()) && count < 9) {
@@ -70,16 +69,16 @@ function getProgramCourses(course, callback) {
              courseCodeRegex.test(courseCode.text().toString())) {
 
               // Should loop to get the sections repeatedly
-              var courseSections = [];
+              var courseSections   = [];
               var courseProfessors = [];
+
+              courseSections.push(section.text().toString());
 
               /* There may be multiple profs for one course
                  section, if so, parse and append them */
               (courseProfessor.text().toString().indexOf('/') > -1)
                 ? courseProfessors = courseProfessor.text().toString().split('/')
                 : courseProfessors.push(courseProfessor.text().toString());
-
-              courseSections.push(section.text().toString());
 
               course = {
                 courseName: courseName.text().toString(),
@@ -90,12 +89,12 @@ function getProgramCourses(course, callback) {
                 courseProf: courseProfessors
               };
 
-              coursesJSONArray.push(course);
+              coursesJSON.push(course);
               console.log(JSON.stringify(course));
           };
         });
       };
-      callback(null, coursesJSONArray);
+      callback(null, coursesJSON);
     });
   });
 };

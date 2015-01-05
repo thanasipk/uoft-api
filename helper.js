@@ -96,3 +96,13 @@ exports.getProgramURLs = function(callback) {
     callback(null, urls);
   });
 };
+
+/*
+Removes annoying 'notes' on fields which
+contain real data for viewing and parsing.
+*/
+String.prototype.removeJunk = function() {
+  this.slice(0, linkText.indexOf('[')).trim();
+  this.slice(0, linkText.indexOf('\r')).trim();
+  this.slice(0, linkText.indexOf('(')).trim();
+}
