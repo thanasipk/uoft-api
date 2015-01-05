@@ -1,14 +1,19 @@
 var uoftAPI = require('./uoft_API.js');
+var helper  = require('./helper.js');
 
 /*************************************
         API FUNCTION TESTS
 /*************************************
 *************************************
+--Core Functions--
 getCourseCodes          --
 getCourseInfo           --
 getCourseDepartment     -- IN-PROGRESS; MUST ASSERT
 getProgramCourses       --
+
+--Helper Functions--
 getProgramURL           -- IN-PROGRESS; MUST ASSERT
+getProgramURLs          -- IN-PROGRESS; MUST ASSERT
 *************************************/
 
 /*************************************
@@ -51,19 +56,28 @@ uoftAPI.getCourseDepartment('phil', function(err, departments) {
 Tests: getProgramURL
 *************************************/
 // Case: Valid course code with all courses in one department.
-// Returns: A JSON object with a link specific to the department only.
-uoftAPI.getProgramURL('csc', function(err, linkJSON) {
+// Returns: A string of the link specific to the department only.
+helper.getProgramURL('csc', function(err, linkJSON) {
   console.log(linkJSON.link);
 });
 
 // Case: Valid course code with courses in multiple departments.
-// Returns: A JSON object with a link specific to the department only.
-uoftAPI.getProgramURL('env', function(err, linkJSON) {
+// Returns: A string of the link specific to the department only.
+helper.getProgramURL('env', function(err, linkJSON) {
   console.log(linkJSON.link);
 });
 
 // Case: Invalid course code.
 // Returns: An JSON object with an empty link attribute (fails silently).
-uoftAPI.getProgramURL('env', function(err, linkJSON) {
+uoftAPI.getProgramURL('csca', function(err, linkJSON) {
+  console.log(linkJSON.link);
+});
+
+/*************************************
+Tests: getProgramURL
+*************************************/
+// Case: Regular function call.
+// Returns: An array of strings containing the course list links.
+helper.getProgramURL(function(err, linkJSON) {
   console.log(linkJSON.link);
 });

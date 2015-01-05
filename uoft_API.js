@@ -1,5 +1,6 @@
 var request           = require('request') // web requests
   , cheerio           = require('cheerio') // server-side DOM functions
+  , helper            = require('./helper.js')
   // , async             = require('async')   // pretty nested-callbacks
   , rootURL           = 'http://www.artsandscience.utoronto.ca'
   , courseRootURL     = '/ofr/timetable/winter'
@@ -145,6 +146,7 @@ Min: 1 (parses the listings page)
 Max: 1 (parses the listings page)
 
 */
+
 exports.getCourseDepartment = function (abbrev, callback) {
 
     // Invalid course code
@@ -180,66 +182,13 @@ exports.getCourseDepartment = function (abbrev, callback) {
   };
 
 /////////////////////////////////////////////////////////
-/*
-
-----------------------------------------
-Function: getProgramURLs
-----------------------------------------
-Returns a json object, containing all Arts and Science department URLs.
-
-----------------------------------------
-Example Usage Calls
-----------------------------------------
-getProgramURLs(function(urls) {
-  console.log(urls);
-});
-
-[ { courseURL: 'asabs.html' },
-  { courseURL: 'ana.html' },
-  ...
-  { courseURL: 'wdw.html' },
-  { courseURL: 'wgsi.html' } ]
-
-----------------------------------------
-Number of Requests
-----------------------------------------
-Min: 1 (parses the listings page)
-Max: 1 (parses the listings page)
-
-*/
-exports.getProgramURLs = function (callback) {
-  request(rootURL + courserootURL + courseListingsURL, function(error, response, body) {
-
-    // Something went wrong
-    if(error || response.statusCode != 200) {
-      throw error;
-    }
-
-    // Scrape the course URLs from the main course listings page
-    else {
-      var $            = cheerio.load(body);
-      var urls         = []; // Store all program listing URLs
-      var webPageRegex = new RegExp('[A-Za-z]\.html');
-
-      // Grab the course links from the program bullet points
-      $('li a', '#content').each(function(foundLink) {
-        var currentLink = $(this).attr('href').toString();
-        if (webPageRegex.test(currentLink)) {
-          urls.push({
-            courseURL: currentLink
-          });
-        };
-      });
-    };
-    callback(null, urls);
-  });
-};
 
 /////////////////////////////////////////////////////////
 /*
 Returns an array of JSON objects, where each object contains
 a single course's title, coursecode, semester and professor.
 */
+
 exports.getProgramCourses = function (programURLs, singleURL) {
 
   request(rootURL + courserootURL + '/' + programURLs[singleURL], function(error, response, body) {
