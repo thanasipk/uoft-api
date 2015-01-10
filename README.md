@@ -1,0 +1,5 @@
+Current Functions
+=================
+
+getProgramCourses
+getCourseDepartment

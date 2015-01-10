@@ -1,9 +1,9 @@
 const
-    cheerio           = require('cheerio')
-  , request           = require('request')
-  , rootURL           = 'http://www.artsandscience.utoronto.ca'
-  , courseRootURL     = '/ofr/timetable/winter'
-  , courseListingsURL = '/sponsors.htm';
+    cheerio          = require('cheerio')
+  , request          = require('request')
+  , rootURL          = 'http://www.artsandscience.utoronto.ca'
+  , winterCoursesURL = '/ofr/timetable/winter'
+  , listingsURL      = '/sponsors.htm';
 
 /*
 ----------------------------------------
@@ -18,32 +18,34 @@ getProgramURL('csc, function(err, courseURL) {
 });
 
 'csc.html'
+
 ----------------------------------------
 Number of Requests
 ----------------------------------------
-Min: 1 (parses the listings page)
-Max: 1 (parses the listings page)
+  Min/Max: 1 (parses the listings page)
 */
 
 exports.getProgramURL = function(course, callback) {
-  request(rootURL + courseRootURL + courseListingsURL, function(error, response, body) {
 
-    // Scrape the course URLs from the main course listings page
+  request(rootURL + winterCoursesURL + listingsURL, function(error, response, body) {
+
+    /* Scrape the course URLs from the main course listings page */
     if(!error && response.statusCode == 200) {
 
-      // Load the response body into Cheerio for DOM manipulation
-      var $            = cheerio.load(body);
-      var webPageRegex = new RegExp('[A-Za-z]\.html');
+      var $            = cheerio.load(body)
+        , webPageRegex = new RegExp('[A-Za-z]\.html');
 
-      // Grab the course links from the program bullet points
+      /* Grab the course links from the program bullet points */
       $('li a', '#content').each(function(foundLink) {
         var currentLink = $(this);
-        // Every course link has its course code
-        if (webPageRegex.test(currentLink.attr('href').toString()) &&
-          currentLink.text().toString().indexOf('[' + course.toUpperCase() + ' courses') > -1) {
+        /* Every course link has its course code */
+        if (
+          webPageRegex.test(currentLink.attr('href').toString()) &&
+          currentLink.text().toString().indexOf('[' + course.toUpperCase() + ' courses') > -1)
+          {
             callback(null, currentLink.attr('href').toString());
             return;
-        };
+          };
       });
     };
   });
@@ -75,15 +77,14 @@ Max: 1 (parses the listings page)
 
 */
 exports.getProgramURLs = function(callback) {
-  request(rootURL + courseRootURL + courseListingsURL, function(error, response, body) {
+  request(rootURL + winterCoursesURL + listingsURL, function(error, response, body) {
 
     // Scrape the course URLs from the main course listings page
     if(!error && response.statusCode == 200) {
 
-      // Load the response body into Cheerio for DOM manipulation
-      var $            = cheerio.load(body);
-      var urls         = []; // Store all program listing URLs
-      var webPageRegex = new RegExp('[A-Za-z]\.html');
+      var $            = cheerio.load(body)
+        , urls         = []
+        , webPageRegex = new RegExp('[A-Za-z]\.html');
 
       // Grab the course links from the program bullet points
       $('li a', '#content').each(function(foundLink) {
@@ -96,13 +97,3 @@ exports.getProgramURLs = function(callback) {
     callback(null, urls);
   });
 };
-
-/*
-Removes annoying 'notes' on fields which
-contain real data for viewing and parsing.
-*/
-String.prototype.removeJunk = function() {
-  this.slice(0, linkText.indexOf('[')).trim();
-  this.slice(0, linkText.indexOf('\r')).trim();
-  this.slice(0, linkText.indexOf('(')).trim();
-}

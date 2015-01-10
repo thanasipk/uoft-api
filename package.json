@@ -1,0 +1,8 @@
+{
+  "name": "uoft-api",
+  "description": "allows for easy gathering of uoft course data.",
+  "author": "Thanasi Karachotzitis <thanasi.karachotzitis@mail.utoronto.ca> (http://thanasi.me)",
+  "version": "0.1.0",
+  "license" : "MIT",
+  "main": "index.js"
+}
