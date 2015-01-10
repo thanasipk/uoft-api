@@ -8,12 +8,6 @@ const
 
 exports.getCourseDepartment = function (abbrev, callback) {
 
-  // Invalid course code
-  if(abbrev.length != 3) {
-    callback('Usage: A three-letter course-code must be used (example):\n'
-      + '   getCourseDepartment(\'csc\', function(depts) {...}', null);
-  };
-
   request(rootURL + winterCoursesURL + listingsURL, function(error, response, body) {
 
     // Retrieve the course department
