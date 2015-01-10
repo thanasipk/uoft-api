@@ -1,8 +1,16 @@
 {
   "name": "uoft-api",
-  "description": "allows for easy gathering of uoft course data.",
+  "description": "A simple module for gathering data from the University of Toronto course listings.",
   "author": "Thanasi Karachotzitis <thanasi.karachotzitis@mail.utoronto.ca> (http://thanasi.me)",
-  "version": "0.1.0",
+  "version": "0.1.5",
+  "repository": {
+    "type": "git",
+    "url": "https://karysto@bitbucket.org/karysto/uoft-api.git"
+  },
+  "dependencies": {
+    "cheerio": "*",
+    "request": "*"
+  },
   "license" : "MIT",
   "main": "index.js"
 }

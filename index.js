@@ -6,41 +6,6 @@ const
   , winterCoursesURL = '/ofr/timetable/winter'
   , listingsURL      = '/sponsors.htm';
 
-/*
-----------------------------------------
-Function: getCourseDepartment
-----------------------------------------
-
-Returns a json object, containing the department
-names associated with the given course code abbreviation.
-
-----------------------------------------
-Example Usage Calls
-----------------------------------------
-
-getCourseDepartment('csc', function(err, departments) {
-  console.log(departments);
-});
-
-[ 'Computer Science' ]
-
-getCourseDepartment('env', function(err, programTitles) {
-  console.log(programTitles);
-});
-
-[ 'Earth Sciences',
-  'Ecology & Evolutionary Biology',
-  'Environment, School of',
-  'Physics' ]
-
-----------------------------------------
-Number of Successful Requests Per Call
-----------------------------------------
-Min: 1 (parses the listings page)
-Max: 1 (parses the listings page)
-
-*/
-
 exports.getCourseDepartment = function (abbrev, callback) {
 
   // Invalid course code
@@ -73,16 +38,6 @@ exports.getCourseDepartment = function (abbrev, callback) {
     callback(null, departments);
   });
 };
-
-/*
-Returns an array of JSON objects, where each object contains
-a single course's title, coursecode, semester and professor.
-*/
-
-/*
-Retrieves all the courses in a program's
-URL and stores the results in a file.
-*/
 
 exports.getProgramCourses = function (course, callback) {
 
@@ -150,7 +105,3 @@ exports.getProgramCourses = function (course, callback) {
     });
   });
 };
-
-this.getProgramCourses('csc', function(err, courses) {
-    console.log(courses);
-});
