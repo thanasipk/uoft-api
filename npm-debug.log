@@ -1,0 +1,102 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'publish', '.' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose node symlink /usr/bin/node
+5 verbose publish [ '.' ]
+6 verbose cache add [ '.', null ]
+7 verbose cache add name=undefined spec="." args=[".",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: '.',
+8 verbose parsed url   path: '.',
+8 verbose parsed url   href: '.' }
+9 silly lockFile 3a52ce78- .
+10 verbose lock . /home/karysto/.npm/3a52ce78-.lock
+11 verbose tar pack [ '/home/karysto/.npm/uoft-api/0.1.0/package.tgz', '.' ]
+12 verbose tarball /home/karysto/.npm/uoft-api/0.1.0/package.tgz
+13 verbose folder .
+14 info prepublish uoft-api@0.1.0
+15 silly lockFile 1f1177db-tar tar://.
+16 verbose lock tar://. /home/karysto/.npm/1f1177db-tar.lock
+17 silly lockFile 12186b9a-o-npm-uoft-api-0-1-0-package-tgz tar:///home/karysto/.npm/uoft-api/0.1.0/package.tgz
+18 verbose lock tar:///home/karysto/.npm/uoft-api/0.1.0/package.tgz /home/karysto/.npm/12186b9a-o-npm-uoft-api-0-1-0-package-tgz.lock
+19 silly lockFile 1f1177db-tar tar://.
+20 silly lockFile 1f1177db-tar tar://.
+21 silly lockFile 12186b9a-o-npm-uoft-api-0-1-0-package-tgz tar:///home/karysto/.npm/uoft-api/0.1.0/package.tgz
+22 silly lockFile 12186b9a-o-npm-uoft-api-0-1-0-package-tgz tar:///home/karysto/.npm/uoft-api/0.1.0/package.tgz
+23 silly lockFile 44eff14c-rysto-npm-uoft-api-0-1-0-package /home/karysto/.npm/uoft-api/0.1.0/package
+24 verbose lock /home/karysto/.npm/uoft-api/0.1.0/package /home/karysto/.npm/44eff14c-rysto-npm-uoft-api-0-1-0-package.lock
+25 silly lockFile 44eff14c-rysto-npm-uoft-api-0-1-0-package /home/karysto/.npm/uoft-api/0.1.0/package
+26 silly lockFile 44eff14c-rysto-npm-uoft-api-0-1-0-package /home/karysto/.npm/uoft-api/0.1.0/package
+27 silly lockFile 3a52ce78- .
+28 silly lockFile 3a52ce78- .
+29 silly publish { name: 'uoft-api',
+29 silly publish   description: 'allows for easy gathering of uoft course data.',
+29 silly publish   author:
+29 silly publish    { name: 'Thanasi Karachotzitis',
+29 silly publish      email: 'thanasi.karachotzitis@mail.utoronto.ca',
+29 silly publish      url: 'http://thanasi.me' },
+29 silly publish   version: '0.1.0',
+29 silly publish   license: 'MIT',
+29 silly publish   main: 'index.js',
+29 silly publish   readme: 'Current Functions\n=================\n\ngetProgramCourses\ngetCourseDepartment\n',
+29 silly publish   readmeFilename: 'README.md',
+29 silly publish   gitHead: 'b07d3228c5d837095c29f3d6c1cd738982a11ea3',
+29 silly publish   _id: 'uoft-api@0.1.0',
+29 silly publish   scripts: {},
+29 silly publish   _shasum: '303585e1e19dc7d950ff2be4c27350be00ca7c26',
+29 silly publish   _from: '.' }
+30 verbose request where is /uoft-api
+31 verbose request registry https://registry.npmjs.org/
+32 verbose request id 2ef1e0a3ad90eaff
+33 verbose url raw /uoft-api
+34 verbose url resolving [ 'https://registry.npmjs.org/', './uoft-api' ]
+35 verbose url resolved https://registry.npmjs.org/uoft-api
+36 verbose request where is https://registry.npmjs.org/uoft-api
+37 info trying registry request attempt 1 at 03:32:32
+38 http PUT https://registry.npmjs.org/uoft-api
+39 http 403 https://registry.npmjs.org/uoft-api
+40 verbose headers { date: 'Sat, 10 Jan 2015 08:32:32 GMT',
+40 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+40 verbose headers   'content-type': 'application/json',
+40 verbose headers   'cache-control': 'max-age=60',
+40 verbose headers   'content-length': '1853',
+40 verbose headers   'accept-ranges': 'bytes',
+40 verbose headers   via: '1.1 varnish',
+40 verbose headers   'x-served-by': 'cache-iad2135-IAD',
+40 verbose headers   'x-cache': 'MISS',
+40 verbose headers   'x-cache-hits': '0',
+40 verbose headers   'x-timer': 'S1420878752.673807,VS0,VE90',
+40 verbose headers   'keep-alive': 'timeout=10, max=50',
+40 verbose headers   connection: 'Keep-Alive' }
+41 error publish Failed PUT 403
+42 error Error: forbidden cannot modify pre-existing version: 0.1.0
+42 error old={"name":"uoft-api","description":"allows for easy gathering of uoft course data.","author":{"name":"Thanasi Karachotzitis","email":"thanasi.karachotzitis@mail.utoronto.ca","url":"http://thanasi.me"},"version":"0.1.0","license":"MIT","main":"index.js","gitHead":"b07d3228c5d837095c29f3d6c1cd738982a11ea3","_id":"uoft-api@0.1.0","scripts":{},"_shasum":"303585e1e19dc7d950ff2be4c27350be00ca7c26","_from":".","_npmVersion":"1.4.28","_npmUser":{"name":"karysto","email":"thanasi.karachotzitis@mail.utoronto.ca"},"maintainers":[{"name":"karysto","email":"thanasi.karachotzitis@mail.utoronto.ca"}],"dist":{"shasum":"303585e1e19dc7d950ff2be4c27350be00ca7c26","tarball":"http://registry.npmjs.org/uoft-api/-/uoft-api-0.1.0.tgz"}}
+42 error new={"name":"uoft-api","description":"allows for easy gathering of uoft course data.","author":{"name":"Thanasi Karachotzitis","email":"thanasi.karachotzitis@mail.utoronto.ca","url":"http://thanasi.me"},"version":"0.1.0","license":"MIT","main":"index.js","readme":"Current Functions\u000a=================\u000a\u000agetProgramCourses\u000agetCourseDepartment\u000a","readmeFilename":"README.md","gitHead":"b07d3228c5d837095c29f3d6c1cd738982a11ea3","_id":"uoft-api@0.1.0","scripts":{},"_shasum":"303585e1e19dc7d950ff2be4c27350be00ca7c26","_from":".","_npmVersion":"1.4.28","_npmUser":{"name":"karysto","email":"thanasi.karachotzitis@mail.utoronto.ca"},"maintainers":[{"name":"karysto","email":"thanasi.karachotzitis@mail.utoronto.ca"}],"dist":{"shasum":"303585e1e19dc7d950ff2be4c27350be00ca7c26","tarball":"http://registry.npmjs.org/uoft-api/-/uoft-api-0.1.0.tgz"}}: uoft-api
+42 error     at RegClient.<anonymous> (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:308:14)
+42 error     at Request._callback (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:246:65)
+42 error     at Request.self.callback (/usr/lib/node_modules/npm/node_modules/request/request.js:236:22)
+42 error     at Request.emit (events.js:98:17)
+42 error     at Request.<anonymous> (/usr/lib/node_modules/npm/node_modules/request/request.js:1142:14)
+42 error     at Request.emit (events.js:117:20)
+42 error     at IncomingMessage.<anonymous> (/usr/lib/node_modules/npm/node_modules/request/request.js:1096:12)
+42 error     at IncomingMessage.emit (events.js:117:20)
+42 error     at _stream_readable.js:943:16
+42 error     at process._tickCallback (node.js:419:13)
+43 error If you need help, you may report this *entire* log,
+43 error including the npm and node versions, at:
+43 error     <http://github.com/npm/npm/issues>
+44 error System Linux 3.2.0-74-generic-pae
+45 error command "/usr/bin/node" "/usr/bin/npm" "publish" "."
+46 error cwd /home/karysto/uoft-api
+47 error node -v v0.10.33
+48 error npm -v 1.4.28
+49 verbose exit [ 1, true ]
