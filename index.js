@@ -9,27 +9,24 @@ const
 exports.getCourseDepartment = function (abbrev, callback) {
 
   request(rootURL + winterCoursesURL + listingsURL, function(error, response, body) {
-
-    // Retrieve the course department
     if(!error && response.statusCode === 200) {
-      var $            = cheerio.load(body);
-      var departments  = [];
-      var webPageRegex = new RegExp('[A-Za-z]\.html');
-
-      $('li a', '#content').each(function(foundLink) {
-        var linkText = $(this).text().toString();
-        var linkAttr = $(this).attr('href').toString();
-
-        // If abbrev has a course in that department
-        if (webPageRegex.test(linkAttr) && linkText.indexOf('[' + abbrev.toUpperCase() + ' courses') > -1) {
-          // Push just the program name, not the extra info
-          departments.push({
-            department: linkText.slice(0, linkText.indexOf('[')).trim()
-          });
-        };
+      // Retrieve the course department
+      helper.getDepartment(body, abbrev, function(err, departments) {
+        callback(null, departments);
       });
     };
-    callback(null, departments);
+  });
+};
+
+exports.getCourseDepartments = function (callback) {
+
+  request(rootURL + winterCoursesURL + listingsURL, function(error, response, body) {
+    if(!error && response.statusCode === 200) {
+      // Retrieve the course departments
+      helper.getDepartment(body, null, function(err, departments) {
+        callback(null, departments);
+      });
+    };
   });
 };
 
@@ -41,7 +38,7 @@ exports.getProgramCourses = function (course, callback) {
     /* Retrieve the course list for the specified program */
     request(rootURL + winterCoursesURL + '/' + programURL, function(error, response, body) {
 
-      if (!error && response.statusCode == 200) {
+      if (!error && response.statusCode === 200) {
 
         /* Load the new markup from this request. */
         var $                 = cheerio.load(body);

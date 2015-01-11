@@ -30,10 +30,10 @@ exports.getProgramURL = function(course, callback) {
   request(rootURL + winterCoursesURL + listingsURL, function(error, response, body) {
 
     /* Scrape the course URLs from the main course listings page */
-    if(!error && response.statusCode == 200) {
+    if(!error && response.statusCode === 200) {
 
       var $            = cheerio.load(body)
-        , webPageRegex = new RegExp('[A-Za-z]\.html');
+        , webPageRegex = new RegExp(/[A-Za-z]\.html/);
 
       /* Grab the course links from the program bullet points */
       $('li a', '#content').each(function(foundLink) {
@@ -80,11 +80,11 @@ exports.getProgramURLs = function(callback) {
   request(rootURL + winterCoursesURL + listingsURL, function(error, response, body) {
 
     // Scrape the course URLs from the main course listings page
-    if(!error && response.statusCode == 200) {
+    if(!error && response.statusCode === 200) {
 
       var $            = cheerio.load(body)
         , urls         = []
-        , webPageRegex = new RegExp('[A-Za-z]\.html');
+        , webPageRegex = new RegExp(/[A-Za-z]\.html/);
 
       // Grab the course links from the program bullet points
       $('li a', '#content').each(function(foundLink) {
@@ -96,4 +96,30 @@ exports.getProgramURLs = function(callback) {
     };
     callback(null, urls);
   });
+};
+
+exports.getDepartment = function(body, abbrev, callback) {
+    var $            = cheerio.load(body);
+    var departments  = [];
+    var webPageRegex = new RegExp(/[A-Za-z]\.html/);
+
+    $('li a', '#content').each(function(foundLink) {
+      var linkText = $(this).text().toString();
+      var linkAttr = $(this).attr('href').toString();
+
+      /* Decide whether to retrieve all
+      departments or just the abbrev department */
+      var courseToGet = (abbrev === null)
+        ? true
+        : linkText.indexOf('[' + abbrev.toUpperCase() + ' courses') > -1;
+
+      // If abbrev has a course in that department
+      if (webPageRegex.test(linkAttr) && courseToGet) {
+        // Push just the program name, not the extra info
+        departments.push({
+          department: linkText.slice(0, linkText.indexOf('[')).trim()
+        });
+      };
+    });
+    callback(null, departments);
 };
