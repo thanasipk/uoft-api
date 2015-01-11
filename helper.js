@@ -123,3 +123,58 @@ exports.getDepartment = function(body, abbrev, callback) {
     });
     callback(null, departments);
 };
+
+exports.getCourseData = function(body, callback) {
+  /* Load the new markup from this request. */
+  var $                 = cheerio.load(body);
+  var courseCodeRegex   = new RegExp(/[A-Za-z]{3}[0-9]{3}[A-Za-z]{1}[0-9]{1}/)
+  , courseTutorialRegex = new RegExp(/[^L][0-9]{4}/)
+  , courseSectionRegex  = new RegExp(/[L][0-9]{4}/)
+  , courseTermRegex     = new RegExp(/[F|S|Y]/)
+  , courseWaitListRegex = new RegExp(/[Y|N]/)
+  , coursesJSON         = [];
+
+  /* Get the course code from the page markup */
+  $('tr').each(function(foundCourse) {
+    var currentRow = $(this)
+    , section = currentRow.children().last()
+    , cellCount = 0;
+
+    /* Find the course code starting from the end of the table */
+    while(!courseSectionRegex.test(section.text().toString()) && cellCount < 9) {
+      section = section.prev();
+      cellCount++;
+    };
+
+    /* Once the lecture section is found, the other important course
+    data is relative to its position. */
+    courseWait = section.next();
+    courseName = section.prev();
+    courseTerm = section.prev().prev();
+    courseCode = section.prev().prev().prev();
+    courseProfessor = section.next().next().next().next();
+
+    /* Make sure we have valid course data */
+    if(courseSectionRegex.test(section.text().toString()) &&
+      courseTermRegex.test(courseTerm.text().toString())  &&
+      courseCodeRegex.test(courseCode.text().toString())) {
+
+        var courseProfessors = [];
+
+        /* There may be multiple profs for one course
+        section, if so, parse and append them */
+        (courseProfessor.text().toString().indexOf('/') > -1)
+        ? courseProfessors = courseProfessor.text().toString().split('/')
+        : courseProfessors.push(courseProfessor.text().toString());
+
+        coursesJSON.push({
+          courseName: courseName.text().toString(),
+          courseCode: courseCode.text().toString(),
+          courseTerm: courseTerm.text().toString(),
+          courseWait: courseWait.text().toString(),
+          courseProf: courseProfessors
+        });
+      };
+  });
+  callback(coursesJSON);
+};
