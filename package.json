@@ -11,6 +11,13 @@
     "cheerio": "*",
     "request": "*"
   },
-  "license" : "MIT",
+  "issues": {
+    "url": "https://bitbucket.org/karysto/uoft-api/issues?status=new&status=open"
+  },
+  "keywords": [
+    "University of Toronto",
+    "Course"
+  ],
+  "license": "MIT",
   "main": "index.js"
 }
