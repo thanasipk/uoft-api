@@ -19,7 +19,7 @@ var uoftAPI = require('uoft-api');
 
 ##### `getCourseDepartment`
 - Takes a valid three-letter code representing a department at the University (ie/ the first three letters of any  course code).
-- Returns an array of JSON objects, where each object contains a department field which has the name of the department specified by the code.
+- Takes a callback which handles error and an array of JSON objects, where each object contains a department field which has the name of the department specified by the code.
 
 ##### Number of Requests:
 - `getCourseDepartment` performs **1** request to retrieve the department name of the specified program.
@@ -47,7 +47,7 @@ uoftAPI.getCourseDepartment('env', function(err, department) {
 
 ##### `getProgramCourses`
 - Takes a valid three-letter code representing a department at the University (ie/ the first three letters of any  course code).
-- Returns an array of JSON objects in a callback (as demonstrated below), where each JSON object contains a single course's information and has the following structure:
+- Takes a callback which handles error and an array of courses represented as JSON objects (as demonstrated below), where each JSON object contains a single course's information and has the following structure:
 
 ```js
   {
