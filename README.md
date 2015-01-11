@@ -14,9 +14,38 @@ var uoftAPI = require('uoft-api');
 ```
 
 ### Supported Functions
+- `getAllCourseDepartments`
 - `getCourseDepartment`
 - `getProgramCourses`
 
+##### `getAllCourseDepartments`
+- Takes a callback which handles error and an array of JSON objects, where each object contains a department field which has the name of the department specified by the code.
+
+##### Number of Requests:
+- `getAllCourseDepartments` performs **1** request to retrieve all department names.
+
+##### Usage:
+```js
+uoftAPI.getAllCourseDepartments(function(err, allDepartments) {
+  // do whatever with the course department array
+});
+```
+##### Examples
+```js
+uoftAPI.getAllCourseDepartments(function(err, allDepartments) {
+  console.log(departments);
+  /*
+  [ { department: 'Aboriginal Studies' },
+    { department: 'American Studies' },
+    { department: 'Anatomy' },
+      < ... etc, ordered by department name ... >
+    { department: 'Victoria College Courses' },
+    { department: 'Woodsworth College Courses' },
+    { department: 'Women and Gender Studies' } ]
+  ]
+  */
+});
+```
 ##### `getCourseDepartment`
 - Takes a valid three-letter code representing a department at the University (ie/ the first three letters of any  course code).
 - Takes a callback which handles error and an array of JSON objects, where each object contains a department field which has the name of the department specified by the code.
