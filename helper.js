@@ -99,13 +99,13 @@ exports.getProgramURLs = function(callback) {
 };
 
 exports.getDepartment = function(body, abbrev, callback) {
-    var $            = cheerio.load(body);
-    var departments  = [];
-    var webPageRegex = new RegExp(/[A-Za-z]\.html/);
+    var $            = cheerio.load(body)
+      , departments  = []
+      , webPageRegex = new RegExp(/[A-Za-z]\.html/);
 
     $('li a', '#content').each(function(foundLink) {
-      var linkText = $(this).text().toString();
-      var linkAttr = $(this).attr('href').toString();
+      var linkText = $(this).text().toString()
+        , linkAttr = $(this).attr('href').toString();
 
       /* Decide whether to retrieve all
       departments or just the abbrev department */
@@ -126,13 +126,13 @@ exports.getDepartment = function(body, abbrev, callback) {
 
 exports.getCourseData = function(body, callback) {
   /* Load the new markup from this request. */
-  var $                 = cheerio.load(body);
-  var courseCodeRegex   = new RegExp(/[A-Za-z]{3}[0-9]{3}[A-Za-z]{1}[0-9]{1}/)
-  , courseTutorialRegex = new RegExp(/[^L][0-9]{4}/)
-  , courseSectionRegex  = new RegExp(/[L][0-9]{4}/)
-  , courseTermRegex     = new RegExp(/[F|S|Y]/)
-  , courseWaitListRegex = new RegExp(/[Y|N]/)
-  , coursesJSON         = [];
+  var $                 = cheerio.load(body)
+    , courseCodeRegex   = new RegExp(/[A-Za-z]{3}[0-9]{3}[A-Za-z]{1}[0-9]{1}/)
+    , courseTutorialRegex = new RegExp(/[^L][0-9]{4}/)
+    , courseSectionRegex  = new RegExp(/[L][0-9]{4}/)
+    , courseTermRegex     = new RegExp(/[F|S|Y]/)
+    , courseWaitListRegex = new RegExp(/[Y|N]/)
+    , coursesJSON         = [];
 
   /* Get the course code from the page markup */
   $('tr').each(function(foundCourse) {
