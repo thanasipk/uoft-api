@@ -1,8 +1,5 @@
 A Node.js module which parses data from the University of Toronto's course listings into JSON to help developers create applications for students with ease.
 
-##### Disclaimer
-Please be aware that this module relies on web scrapers to retrieve the data from the University of Toronto course listings. I cannot control how you incorporate this module into your project, and so by using this module you agree that the developer(s) of this module are in no way responsible for any consequences that may (or may not) result because of your use of this module.
-
 #### Getting Started
 ##### Install:
 ```sh
