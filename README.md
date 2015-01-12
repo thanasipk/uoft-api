@@ -33,7 +33,7 @@ uoftAPI.getAllCourseDepartments(function(err, allDepartments) {
 ##### Examples
 ```js
 uoftAPI.getAllCourseDepartments(function(err, allDepartments) {
-  console.log(departments);
+  console.log(allDepartments);
   /*
   [ { department: 'Aboriginal Studies' },
     { department: 'American Studies' },
