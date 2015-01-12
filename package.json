@@ -5,14 +5,14 @@
   "version": "0.2.11",
   "repository": {
     "type": "git",
-    "url": "https://karysto@bitbucket.org/karysto/uoft-api.git"
+    "url": "https://github.com/Tomkay94/uoft-api"
   },
   "dependencies": {
     "cheerio": "*",
     "request": "*"
   },
-  "issues": {
-    "url": "https://bitbucket.org/karysto/uoft-api/issues?status=new&status=open"
+  "bugs": {
+    "url": "https://github.com/Tomkay94/uoft-api/issues"
   },
   "keywords": [
     "University of Toronto",
