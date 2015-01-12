@@ -11,8 +11,8 @@ exports.getCourseDepartment = function (abbrev, callback) {
   request(rootURL + winterCoursesURL + listingsURL, function(error, response, body) {
     if(!error && response.statusCode === 200) {
       /* Retrieve the course department */
-      helper.getDepartment(body, abbrev, function(err, departments) {
-        callback(null, departments);
+      helper.getDepartment(body, abbrev, function(err, department) {
+        callback(null, department);
       });
     };
   });
@@ -34,7 +34,7 @@ exports.getAllCourseDepartments = function (callback) {
 
 exports.getProgramCourses = function (course, callback) {
 
-  /* Find the program by the specified course abbreviation */
+  /* Find the program page by the specified course abbreviation */
   helper.getProgramURL(course, function(err, programURL) {
 
     /* Retrieve the course list for the specified program */

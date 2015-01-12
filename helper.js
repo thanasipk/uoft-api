@@ -9,15 +9,15 @@ const
 ----------------------------------------
 Function: getProgramURL
 ----------------------------------------
-Returns a string of the course listing URL link.
+  Returns a string of the course listing URL link.
 ----------------------------------------
 Example Usage Calls
 ----------------------------------------
-getProgramURL('csc, function(err, courseURL) {
-  console.log(courseURL);
-});
+  getProgramURL('csc, function(err, courseURL) {
+    console.log(courseURL);
+  });
 
-'csc.html'
+  'csc.html'
 
 ----------------------------------------
 Number of Requests
@@ -55,25 +55,24 @@ exports.getProgramURL = function(course, callback) {
 ----------------------------------------
 Function: getProgramURLs
 ----------------------------------------
-Returns a json object, containing all Arts and Science department URLs.
+  Returns a json object, containing all Arts and Science department URLs.
 ----------------------------------------
 Example Usage Calls
 ----------------------------------------
-getProgramURLs(function(urls) {
-console.log(urls);
-});
+  getProgramURLs(function(urls) {
+    console.log(urls);
+  });
 
-[ { courseURL: 'asabs.html' },
-{ courseURL: 'ana.html' },
-...
-{ courseURL: 'wdw.html' },
-{ courseURL: 'wgsi.html' } ]
+  [ { courseURL: 'asabs.html' },
+  { courseURL: 'ana.html' },
+  ...
+  { courseURL: 'wdw.html' },
+  { courseURL: 'wgsi.html' } ]
 
 ----------------------------------------
 Number of Requests
 ----------------------------------------
-Min: 1 (parses the listings page)
-Max: 1 (parses the listings page)
+  Min/Max: 1 (parses the listings page)
 
 */
 exports.getProgramURLs = function(callback) {
@@ -98,6 +97,26 @@ exports.getProgramURLs = function(callback) {
   });
 };
 
+/*
+----------------------------------------
+Function: getDepartment
+----------------------------------------
+  Returns a callback with an array of JSON objects,
+  containing the parameter department data.
+----------------------------------------
+Example Usage Calls
+----------------------------------------
+  getDepartment('csc', function(err, department) {
+    console.log(department);
+  });
+
+  { ['Computer Science'] }
+----------------------------------------
+Number of Requests
+----------------------------------------
+  Min/Max: 0 (makes no requests)
+
+*/
 exports.getDepartment = function(body, abbrev, callback) {
     var $             = cheerio.load(body)
       , departments   = []
@@ -124,6 +143,24 @@ exports.getDepartment = function(body, abbrev, callback) {
     callback(null, departments);
 };
 
+/*
+----------------------------------------
+Function: getCourseData
+----------------------------------------
+  Returns a callback with an array of JSON objects,
+  containing the specified course data.
+----------------------------------------
+Example Usage Calls
+----------------------------------------
+  getDepartment('csc', function(err, courseData) {
+    console.log(courseData);
+  });
+----------------------------------------
+Number of Requests
+----------------------------------------
+  Min/Max: 0 (makes no requests)
+
+*/
 exports.getCourseData = function(body, callback) {
   /* Load the new markup from this request. */
   var $                   = cheerio.load(body)
