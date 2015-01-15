@@ -15,7 +15,7 @@ var uoftAPI = require('uoft-api');
 - `getCourseDepartment`
 - `getProgramCourses`
 
-##### `getAllCourseDepartments`
+##### `getAllCourseDepartments(callback)`
 - Takes a callback which handles error and an array of JSON objects, where each object contains a department field which has the name of the department specified by the code.
 
 ##### Number of Requests:
@@ -43,9 +43,9 @@ uoftAPI.getAllCourseDepartments(function(err, allDepartments) {
   */
 });
 ```
-##### `getCourseDepartment`
-- Takes a valid three-letter code representing a department at the University (ie/ the first three letters of any  course code).
-- Takes a callback which handles error and an array of JSON objects, where each object contains a department field which has the name of the department specified by the code.
+##### `getCourseDepartment(courseCode, callback)`
+- `courseCode` is a valid three-letter code representing a department at the University (ie/ the first three letters of any course code).
+- Takes a `callback` which handles error and an array of JSON objects, where each object contains a department field which has the name of the department specified by the code.
 
 ##### Number of Requests:
 - `getCourseDepartment` performs **1** request to retrieve the department name of the specified program.
@@ -71,8 +71,9 @@ uoftAPI.getCourseDepartment('env', function(err, department) {
 });
 ```
 
-##### `getProgramCourses`
-- Takes a valid three-letter code representing a department at the University (ie/ the first three letters of any  course code).
+##### `getProgramCourses(programCode, acceptCancelledCourses, callback)`
+- Takes a valid three-letter `programCode` representing a department at the University (ie/ the first three letters of any  course code).
+- Takes a value `true` or `false`, which determines whether cancelled courses will be included in the array of course JSON objects.
 - Takes a callback which handles error and an array of courses represented as JSON objects (as demonstrated below), where each JSON object contains a single course's information and has the following structure:
 
 ```js
@@ -90,7 +91,7 @@ uoftAPI.getCourseDepartment('env', function(err, department) {
 
 ##### Usage:
 ```js
-uoftAPI.getProgramCourses(programCode, function(err, courseData) {
+uoftAPI.getProgramCourses(programCode, acceptCancelledCourses, function(err, courseData) {
   // do whatever with the returned courseData json
 });
 ```

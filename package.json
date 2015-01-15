@@ -2,7 +2,7 @@
   "name": "uoft-api",
   "description": "A simple module for gathering data from the University of Toronto course listings.",
   "author": "Thanasi Karachotzitis <thanasi.karachotzitis@mail.utoronto.ca> (http://thanasi.me)",
-  "version": "0.2.11",
+  "version": "0.2.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/Tomkay94/uoft-api"
