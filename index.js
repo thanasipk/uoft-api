@@ -32,7 +32,7 @@ exports.getAllCourseDepartments = function (callback) {
 
 };
 
-exports.getProgramCourses = function (course, callback) {
+exports.getProgramCourses = function (course, getCancelledCourses, callback) {
 
   /* Find the program page by the specified course abbreviation */
   helper.getProgramURL(course, function(err, programURL) {
@@ -40,7 +40,7 @@ exports.getProgramCourses = function (course, callback) {
     /* Retrieve the course list for the specified program */
     request(rootURL + winterCoursesURL + '/' + programURL, function(error, response, body) {
       if (!error && response.statusCode === 200) {
-        helper.getCourseData(body, function(coursesJSON) {
+        helper.getCourseData(body, getCancelledCourses, function(coursesJSON) {
           callback(null, coursesJSON);
         });
       };

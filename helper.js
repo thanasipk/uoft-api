@@ -161,7 +161,7 @@ Number of Requests
   Min/Max: 0 (makes no requests)
 
 */
-exports.getCourseData = function(body, callback) {
+exports.getCourseData = function(body, getCancelledCourses, callback) {
 
   /* Load the new markup from this request. */
   var $                   = cheerio.load(body)
@@ -192,10 +192,15 @@ exports.getCourseData = function(body, callback) {
     courseCode      = section.prev().prev().prev();
     courseProfessor = section.next().next().next().next();
 
+    var acceptCancelledCourses = (getCancelledCourses === true)
+      ? true
+      : courseWait.text().toString().indexOf('Cancel') === -1;
+
     /* Make sure we have valid course data */
     if(courseSectionRegex.test(section.text().toString())  &&
        courseTermRegex.test(courseTerm.text().toString())  &&
-       courseCodeRegex.test(courseCode.text().toString()))
+       courseCodeRegex.test(courseCode.text().toString())  &&
+       acceptCancelledCourses)
     {
 
       var courseProfessors = [];
@@ -203,8 +208,8 @@ exports.getCourseData = function(body, callback) {
       /* There may be multiple profs for one course
       section, if so, parse and append them */
       (courseProfessor.text().toString().indexOf('/') > -1)
-      ? courseProfessors = courseProfessor.text().toString().split('/')
-      : courseProfessors.push(courseProfessor.text().toString());
+        ? courseProfessors = courseProfessor.text().toString().split('/')
+        : courseProfessors.push(courseProfessor.text().toString());
 
       coursesJSON.push({
         "courseName": courseName.text().toString(),
