@@ -97,7 +97,7 @@ uoftAPI.getProgramCourses(programCode, acceptCancelledCourses, function(err, cou
 ```
 ##### Examples
 ```js
-uoftAPI.getProgramCourses('csc', function(err, courseData) {
+uoftAPI.getProgramCourses('csc', true, function(err, courseData) {
   console.log(courseData);
   /*
   [
