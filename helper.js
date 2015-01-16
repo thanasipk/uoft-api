@@ -192,6 +192,8 @@ exports.getCourseData = function(body, getCancelledCourses, callback) {
     courseCode      = section.prev().prev().prev();
     courseProfessor = section.next().next().next().next();
 
+    /* Determine whether or not to include 
+    cancelled courses in the callback JSON array */
     var acceptCancelledCourses = (getCancelledCourses === true)
       ? true
       : courseWait.text().toString().indexOf('Cancel') === -1;
