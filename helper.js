@@ -186,13 +186,13 @@ exports.getCourseData = function(body, getCancelledCourses, callback) {
 
     /* Once the lecture section is found, the other important course
     data is relative to its position. */
-    courseWait      = section.next();
-    courseName      = section.prev();
-    courseTerm      = section.prev().prev();
-    courseCode      = section.prev().prev().prev();
-    courseProfessor = section.next().next().next().next();
+    var courseWait      = section.next()
+      , courseName      = section.prev()
+      , courseTerm      = section.prev().prev()
+      , courseCode      = section.prev().prev().prev()
+      , courseProfessor = section.next().next().next().next()
 
-    /* Determine whether or not to include 
+    /* Determine whether or not to include
     cancelled courses in the callback JSON array */
     var acceptCancelledCourses = (getCancelledCourses === true)
       ? true
