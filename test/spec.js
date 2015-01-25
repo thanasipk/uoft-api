@@ -1,4 +1,4 @@
-// var index = require('../index.js');
+// var main = require('../index.js');
 
 exports.testGetAllCourseDepartments = {
   testGetAllDepartments : function(test){
