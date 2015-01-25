@@ -174,15 +174,8 @@ exports.getCourseData = function(body, getCancelledCourses, callback) {
 
   /* Get the course code from the page markup */
   $('tr').each(function(foundCourse) {
-    var currentRow = $(this)
-      , section      = currentRow.children().last()
-      , cellCount    = 0;
 
-    /* Find the course code starting from the end of the table */
-    while(!courseSectionRegex.test(section.text().toString()) && cellCount < 9) {
-      section = section.prev();
-      cellCount++;
-    };
+    var section = findCourseSection(courseSectionRegex, $(this));
 
     /* Once the lecture section is found, the other important course
     data is relative to its position. */
@@ -228,4 +221,17 @@ function parseProfessors(courseProfessor) {
   : courseProfessors.push(courseProfessor.text().toString());
 
   return courseProfessors;
+};
+
+/* Find the course code starting from the end of the table */
+function findCourseSection(courseSectionRegex, context) {
+  var currentRow = context
+  , section      = currentRow.children().last()
+  , cellCount    = 0;
+
+  while(!courseSectionRegex.test(section.text().toString()) && cellCount < 9) {
+    section = section.prev();
+    cellCount++;
+  };
+  return section;
 };
