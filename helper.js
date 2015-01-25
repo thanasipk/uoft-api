@@ -183,19 +183,14 @@ exports.getCourseData = function(body, getCancelledCourses, callback) {
       , courseName      = section.prev()
       , courseTerm      = section.prev().prev()
       , courseCode      = section.prev().prev().prev()
-      , courseProfessor = section.next().next().next().next()
+      , courseProfessor = section.next().next().next().next();
 
-    /* Determine whether or not to include
-    cancelled courses in the callback JSON array */
-    var acceptCancelledCourses = (getCancelledCourses === true)
-      ? true
-      : courseWait.text().toString().indexOf('Cancel') === -1;
+    var includeCancelled = getCancelledCourses(getCancelledCourses, courseWait);
 
     /* Make sure we have valid course data */
     if(courseTermRegex.test(courseTerm.text().toString())  &&
        courseCodeRegex.test(courseCode.text().toString())  &&
-       acceptCancelledCourses)
-    {
+       includeCancelled) {
 
       var courseProfessors = parseProfessors(courseProfessor);
 
@@ -212,13 +207,13 @@ exports.getCourseData = function(body, getCancelledCourses, callback) {
 };
 
 /* Parse professors */
-function parseProfessors(courseProfessor) {
+function parseProfessors(professorField) {
   var courseProfessors = [];
 
   /* There may be multiple profs for one course section */
-  (courseProfessor.text().toString().indexOf('/') > -1)
-  ? courseProfessors = courseProfessor.text().toString().split('/')
-  : courseProfessors.push(courseProfessor.text().toString());
+  (professorField.text().toString().indexOf('/') > -1)
+  ? courseProfessors = professorField.text().toString().split('/')
+  : courseProfessors.push(professorField.text().toString());
 
   return courseProfessors;
 };
@@ -229,9 +224,14 @@ function findCourseSection(courseSectionRegex, context) {
   , section      = currentRow.children().last()
   , cellCount    = 0;
 
-  while(!courseSectionRegex.test(section.text().toString()) && cellCount < 9) {
+  while(!courseSectionRegex.test(section.text().toString()) && cellCount++ < 10) {
     section = section.prev();
-    cellCount++;
   };
   return section;
+};
+
+function getCancelledCourses(cancelParam, courseWaitField) {
+  return ((cancelParam === true)
+    ? true
+    : courseWaitField.text().toString().indexOf('Cancel') === -1);
 };
