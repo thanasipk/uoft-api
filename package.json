@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/Tomkay94/uoft-api"
   },
+  "scripts" : {
+    "test": "nodeunit test/*"
+  },
   "dependencies": {
     "cheerio": "^0.18.0",
     "request": "^2.51.0"
