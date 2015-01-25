@@ -199,19 +199,12 @@ exports.getCourseData = function(body, getCancelledCourses, callback) {
       : courseWait.text().toString().indexOf('Cancel') === -1;
 
     /* Make sure we have valid course data */
-    if(courseSectionRegex.test(section.text().toString())  &&
-       courseTermRegex.test(courseTerm.text().toString())  &&
+    if(courseTermRegex.test(courseTerm.text().toString())  &&
        courseCodeRegex.test(courseCode.text().toString())  &&
        acceptCancelledCourses)
     {
 
-      var courseProfessors = [];
-
-      /* There may be multiple profs for one course
-      section, if so, parse and append them */
-      (courseProfessor.text().toString().indexOf('/') > -1)
-        ? courseProfessors = courseProfessor.text().toString().split('/')
-        : courseProfessors.push(courseProfessor.text().toString());
+      var courseProfessors = parseProfessors(courseProfessor);
 
       coursesJSON.push({
         "courseName": courseName.text().toString(),
@@ -223,4 +216,16 @@ exports.getCourseData = function(body, getCancelledCourses, callback) {
     };
   });
   callback(coursesJSON);
+};
+
+/* Parse professors */
+function parseProfessors(courseProfessor) {
+  var courseProfessors = [];
+
+  /* There may be multiple profs for one course section */
+  (courseProfessor.text().toString().indexOf('/') > -1)
+  ? courseProfessors = courseProfessor.text().toString().split('/')
+  : courseProfessors.push(courseProfessor.text().toString());
+
+  return courseProfessors;
 };
