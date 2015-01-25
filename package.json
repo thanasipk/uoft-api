@@ -8,8 +8,11 @@
     "url": "https://github.com/Tomkay94/uoft-api"
   },
   "dependencies": {
-    "cheerio": "*",
-    "request": "*"
+    "cheerio": "^0.18.0",
+    "request": "^2.51.0"
+  },
+  "devDependencies": {
+    "nodeunit": "^0.9.0"
   },
   "bugs": {
     "url": "https://github.com/Tomkay94/uoft-api/issues"

@@ -185,7 +185,7 @@ exports.getCourseData = function(body, getCancelledCourses, callback) {
       , courseCode      = section.prev().prev().prev()
       , courseProfessor = section.next().next().next().next();
 
-    var includeCancelled = getCancelledCourses(getCancelledCourses, courseWait);
+    var includeCancelled = getCancelChoice(getCancelledCourses, courseWait);
 
     /* Make sure we have valid course data */
     if(courseTermRegex.test(courseTerm.text().toString())  &&
@@ -205,6 +205,10 @@ exports.getCourseData = function(body, getCancelledCourses, callback) {
   });
   callback(coursesJSON);
 };
+
+/************************
+Private Helper Functions
+*************************/
 
 /* Parse professors */
 function parseProfessors(professorField) {
@@ -230,8 +234,11 @@ function findCourseSection(courseSectionRegex, context) {
   return section;
 };
 
-function getCancelledCourses(cancelParam, courseWaitField) {
-  return ((cancelParam === true)
+/* Determine whether to include cancelled courses */
+function getCancelChoice(cancelParam, courseWaitField) {
+  return (
+    (cancelParam === true)
     ? true
-    : courseWaitField.text().toString().indexOf('Cancel') === -1);
+    : courseWaitField.text().toString().indexOf('Cancel') === -1
+  );
 };
