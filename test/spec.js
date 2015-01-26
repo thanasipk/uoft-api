@@ -1,28 +1,28 @@
 // var main = require('../index.js');
 
 exports.testGetAllCourseDepartments = {
-  testGetAllDepartments : function(test){
+  testGetsAllDepartments : function(test){
     test.done();
   }
 };
 
 exports.testGetCourseDepartment = {
-  testSingleAssociatedDepartment : function(test) {
+  testGetsSingleAssociatedDepartment : function(test) {
     test.done();
   },
-  testManyAssociatedDepartment : function(test) {
+  testGetsManyAssociatedDepartment : function(test) {
     test.done();
   },
-  testBadCourseCode : function(test) {
+  testFailsOnBadCourseCode : function(test) {
     test.done();
   }
 };
 
 exports.testGetProgramCourses = {
-  testIncludeCancelledCourses : function(test){
+  testIncludesCancelledCourses : function(test){
     test.done();
   },
-  testNotIncludeCancelledCourses : function(test){
+  testDoesNotIncludeCancelledCourses : function(test){
     test.done();
   }
 };
