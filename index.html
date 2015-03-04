@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>UofT API by Tomkay94</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/Tomkay94/uoft-api">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>UofT API</h1>
+            <h2>A Node.js module which parses data from the University of Toronto&#39;s course listings into JSON.</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/Tomkay94/uoft-api/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/Tomkay94/uoft-api/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <p>A Node.js module which parses data from the University of Toronto's course listings into JSON to help developers create applications for students with ease.</p>
+
+<h4>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h4>
+
+<h5>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install:</h5>
+
+<div class="highlight highlight-sh"><pre>$ npm i uoft-api</pre></div>
+
+<h5>
+<a id="reference" class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference:</h5>
+
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> uoftAPI <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>uoft-api<span class="pl-pds">'</span></span>);</pre></div>
+
+<h3>
+<a id="supported-functions" class="anchor" href="#supported-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported Functions</h3>
+
+<ul>
+<li><code>getAllCourseDepartments</code></li>
+<li><code>getCourseDepartment</code></li>
+<li><code>getProgramCourses</code></li>
+</ul>
+
+<h5>
+<a id="getallcoursedepartmentscallback" class="anchor" href="#getallcoursedepartmentscallback" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>getAllCourseDepartments(callback)</code>
+</h5>
+
+<ul>
+<li>Takes a callback which handles error and an array of JSON objects, where each object contains a department field which has the name of the department specified by the code.</li>
+</ul>
+
+<h5>
+<a id="number-of-requests" class="anchor" href="#number-of-requests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Number of Requests:</h5>
+
+<ul>
+<li>
+<code>getAllCourseDepartments</code> performs <strong>1</strong> request to retrieve all department names.</li>
+</ul>
+
+<h5>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h5>
+
+<div class="highlight highlight-js"><pre>uoftAPI.getAllCourseDepartments(<span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">allDepartments</span>) {
+  <span class="pl-c">// do whatever with the course department array</span>
+});</pre></div>
+
+<h5>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h5>
+
+<div class="highlight highlight-js"><pre>uoftAPI.getAllCourseDepartments(<span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">allDepartments</span>) {
+  <span class="pl-en">console</span><span class="pl-s3">.log</span>(allDepartments);
+  <span class="pl-c">/*</span>
+<span class="pl-c">  [ { department: 'Aboriginal Studies' },</span>
+<span class="pl-c">    { department: 'American Studies' },</span>
+<span class="pl-c">    { department: 'Anatomy' },</span>
+<span class="pl-c">      &lt; ... etc, ordered by department name ... &gt;</span>
+<span class="pl-c">    { department: 'Victoria College Courses' },</span>
+<span class="pl-c">    { department: 'Woodsworth College Courses' },</span>
+<span class="pl-c">    { department: 'Women and Gender Studies' } ]</span>
+<span class="pl-c">  ]</span>
+<span class="pl-c">  */</span>
+});</pre></div>
+
+<h5>
+<a id="getcoursedepartmentcoursecode-callback" class="anchor" href="#getcoursedepartmentcoursecode-callback" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>getCourseDepartment(courseCode, callback)</code>
+</h5>
+
+<ul>
+<li>
+<code>courseCode</code> is a valid three-letter code representing a department at the University (ie/ the first three letters of any course code).</li>
+<li>Takes a <code>callback</code> which handles error and an array of JSON objects, where each object contains a department field which has the name of the department specified by the code.</li>
+</ul>
+
+<h5>
+<a id="number-of-requests-1" class="anchor" href="#number-of-requests-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Number of Requests:</h5>
+
+<ul>
+<li>
+<code>getCourseDepartment</code> performs <strong>1</strong> request to retrieve the department name of the specified program.</li>
+</ul>
+
+<h5>
+<a id="usage-1" class="anchor" href="#usage-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h5>
+
+<div class="highlight highlight-js"><pre>uoftAPI.getCourseDepartment(programCode, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">department</span>) {
+  <span class="pl-c">// do whatever with the course department array</span>
+});</pre></div>
+
+<h5>
+<a id="examples-1" class="anchor" href="#examples-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h5>
+
+<div class="highlight highlight-js"><pre>uoftAPI.getCourseDepartment(<span class="pl-s1"><span class="pl-pds">'</span>csc<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">department</span>) {
+  <span class="pl-en">console</span><span class="pl-s3">.log</span>(department);
+  <span class="pl-c">/* [ { department: 'Computer Science' } ] */</span>
+});</pre></div>
+
+<div class="highlight highlight-js"><pre>uoftAPI.getCourseDepartment(<span class="pl-s1"><span class="pl-pds">'</span>env<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">department</span>) {
+  <span class="pl-en">console</span><span class="pl-s3">.log</span>(department);
+  <span class="pl-c">/* [ { department: 'Environment, School of' } ] */</span>
+});</pre></div>
+
+<h5>
+<a id="getprogramcoursesprogramcode-acceptcancelledcourses-callback" class="anchor" href="#getprogramcoursesprogramcode-acceptcancelledcourses-callback" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>getProgramCourses(programCode, acceptCancelledCourses, callback)</code>
+</h5>
+
+<ul>
+<li>Takes a valid three-letter <code>programCode</code> representing a department at the University (ie/ the first three letters of any  course code).</li>
+<li>Takes a value <code>true</code> or <code>false</code>, which determines whether cancelled courses will be included in the array of course JSON objects.</li>
+<li>Takes a callback which handles error and an array of courses represented as JSON objects (as demonstrated below), where each JSON object contains a single course's information and has the following structure:</li>
+</ul>
+
+<div class="highlight highlight-js"><pre>  {
+    courseName<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>Computational Thinking<span class="pl-pds">'</span></span>, <span class="pl-c">// Title of the course</span>
+    courseCode<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>CSC104H1<span class="pl-pds">'</span></span>,               <span class="pl-c">// Course code</span>
+    courseTerm<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>F<span class="pl-pds">'</span></span>,                      <span class="pl-c">// Course semester</span>
+    courseWait<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>Y<span class="pl-pds">'</span></span>,                      <span class="pl-c">// If the course contains a wait-list (Y/N)</span>
+    courseProf<span class="pl-k">:</span> [ <span class="pl-s1"><span class="pl-pds">'</span>D. Heap<span class="pl-pds">'</span></span> ]             <span class="pl-c">// Professor(s) teaching the course</span>
+  }</pre></div>
+
+<h5>
+<a id="number-of-requests-2" class="anchor" href="#number-of-requests-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Number of Requests:</h5>
+
+<ul>
+<li>
+<code>getProgramCourses</code> performs <strong>2</strong> requests to retrieve all course data of the specified program.</li>
+</ul>
+
+<h5>
+<a id="usage-2" class="anchor" href="#usage-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h5>
+
+<div class="highlight highlight-js"><pre>uoftAPI.getProgramCourses(programCode, acceptCancelledCourses, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">courseData</span>) {
+  <span class="pl-c">// do whatever with the returned courseData json</span>
+});</pre></div>
+
+<h5>
+<a id="examples-2" class="anchor" href="#examples-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h5>
+
+<div class="highlight highlight-js"><pre>uoftAPI.getProgramCourses(<span class="pl-s1"><span class="pl-pds">'</span>csc<span class="pl-pds">'</span></span>, <span class="pl-c1">true</span>, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">courseData</span>) {
+  <span class="pl-en">console</span><span class="pl-s3">.log</span>(courseData);
+  <span class="pl-c">/*</span>
+<span class="pl-c">  [</span>
+<span class="pl-c">    {</span>
+<span class="pl-c">      courseName: 'Computational Thinking',</span>
+<span class="pl-c">      courseCode: 'CSC104H1',</span>
+<span class="pl-c">      courseTerm: 'F',</span>
+<span class="pl-c">      courseWait: 'Y',</span>
+<span class="pl-c">      courseProf: [ 'D. Heap' ]</span>
+<span class="pl-c">    },</span>
+<span class="pl-c">    {</span>
+<span class="pl-c">      courseName: 'Computational Thinking',</span>
+<span class="pl-c">      courseCode: 'CSC104H1',</span>
+<span class="pl-c">      courseTerm: 'S',</span>
+<span class="pl-c">      courseWait: 'Y',</span>
+<span class="pl-c">      courseProf: [ 'G. Baumgartner' ]</span>
+<span class="pl-c">    },</span>
+<span class="pl-c">      &lt; ... etc, ordered by course code ... &gt;</span>
+<span class="pl-c">    {</span>
+<span class="pl-c">      courseName: 'Computabil &amp; Logic',</span>
+<span class="pl-c">      courseCode: 'CSC438H1',</span>
+<span class="pl-c">      courseTerm: 'F',</span>
+<span class="pl-c">      courseWait: 'Y',</span>
+<span class="pl-c">      courseProf: [ 'T. Pitassi' ]</span>
+<span class="pl-c">    }</span>
+<span class="pl-c">  ]</span>
+<span class="pl-c">*/</span>
+});</pre></div>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/Tomkay94">Tomkay94</a> can be found on <a href="https://github.com/Tomkay94/uoft-api">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
